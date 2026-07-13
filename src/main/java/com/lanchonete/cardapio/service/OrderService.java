@@ -80,11 +80,11 @@ public class OrderService {
     }
 
     public List<Order> listarPedidosDoUsuario(User user) {
-        return orderRepository.findByUserOrderByCriadoEmDesc(user);
+        return orderRepository.findByUserWithItens(user);
     }
 
     public Order buscarPorId(Long id) {
-        return orderRepository.findById(id)
+        return orderRepository.findByIdWithItens(id)
                 .orElseThrow(() -> new BusinessException(HttpStatus.NOT_FOUND, "Pedido nao encontrado"));
     }
 
@@ -100,7 +100,7 @@ public class OrderService {
     // ===== Operacoes de ADMIN =====
 
     public List<Order> listarTodosPedidos() {
-        return orderRepository.findAllByOrderByCriadoEmDesc();
+        return orderRepository.findAllWithItens();
     }
 
     @Transactional
